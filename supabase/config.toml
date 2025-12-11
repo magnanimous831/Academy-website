@@ -1,0 +1,4 @@
+project_id = "pcifewnvbpftiouvqczc"
+
+[functions.send-bus-notification]
+verify_jwt = false
