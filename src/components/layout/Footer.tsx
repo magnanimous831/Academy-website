@@ -125,10 +125,21 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm opacity-70">
-            © {new Date().getFullYear()} achievers Academy. All rights reserved.
-          </p>
+            <div className="mt-12 pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">  
+                      <p className="text-sm opacity-70">
+                © {new Date().getFullYear()} Achievers Academy. All rights reserved.
+                <span className="mx-2">|</span>
+                Designed by{" "}
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium hover:text-primary transition-colors"
+                >
+                  Shadrak Kipkirui
+                </a>
+              </p>
+
           <div className="flex gap-6">
             <Link to="/privacy" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
               Privacy Policy
