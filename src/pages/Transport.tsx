@@ -829,7 +829,7 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
             {/* Auto-play Video */}
             <div className="aspect-video">
              <iframe
-                src="https://www.youtube.com/embed/tZfCC2SPh2E?controls=1&rel=0"
+                src="http://www.youtube.com/embed/tZfCC2SPh2E?controls=1&rel=0"
                 title="School Transport Safety Video"
                 className="w-full h-full"
                 allow="accelerometer; encrypted-media; picture-in-picture"
