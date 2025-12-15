@@ -13,6 +13,8 @@ import schoolBusHero from "@/assets/school-bus-hero.png";
 
 export default function Transport() {
   const { toast } = useToast();
+  
+const [showSafetyVideo, setShowSafetyVideo] = useState(false);
   const [formData, setFormData] = useState({
     parentName: "",
     childName: "",
@@ -158,10 +160,15 @@ export default function Transport() {
               </p>
               
               <div className="flex flex-wrap gap-4">
-  <Button size="lg" className="bg-school-yellow text-school-blue hover:bg-school-yellow/90 hover:shadow-md transition-all">
-    <Play className="w-5 h-5 mr-2" />
-    Watch Safety Video
-  </Button>
+  <Button
+  size="lg"
+  onClick={() => setShowSafetyVideo(true)}
+  className="bg-red-600 text-white hover:bg-red-700 hover:shadow-xl transition-all ring-2 ring-red-300"
+>
+  <Play className="w-5 h-5 mr-2" />
+  Watch Safety Video
+</Button>
+
   <Button size="lg" className="bg-school-blue text-white hover:bg-school-blue/90 hover:shadow-md transition-all">
     <Map className="w-5 h-5 mr-2" />
     View All Routes
@@ -806,6 +813,35 @@ export default function Transport() {
           </div>
         </div>
       </section>
+      {/* SAFETY VIDEO MODAL */}
+      {showSafetyVideo && (
+        <div className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center p-4">
+          <div className="relative bg-black rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl">
+
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSafetyVideo(false)}
+              className="absolute top-3 right-3 z-10 bg-black/70 text-white px-3 py-1 rounded-lg hover:bg-black"
+            >
+              ✕
+            </button>
+
+            {/* Auto-play Video */}
+            <div className="aspect-video">
+              <iframe
+                src="http://youtube.com/watch?v=tZfCC2SPh2E?autoplay=1&mute=1&rel=0"
+                title="School Transport Safety Video"
+                className="w-full h-full"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 }
