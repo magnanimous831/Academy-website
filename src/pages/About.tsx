@@ -6,6 +6,9 @@ import libraryImage from "@/assets/library.jpg";
 import playgroundImage from "@/assets/playground.jpg";
 import classroomImage from "@/assets/classroom.jpg";
 import principalImage from "@/assets/principal.jpg";
+import deputyImage from "@/assets/deputy.jpg";
+import primaryImage from "@/assets/primary.jpg";
+import sportsImage from "@/assets/sports.jpg";
 
 const values = [
   { icon: Heart, title: "Love & Care", description: "We nurture every child with genuine love and attention" },
@@ -16,9 +19,9 @@ const values = [
 
 const staff = [
   { name: "Mrs. Grace Wanjiku", role: "Principal", image: principalImage },
-  { name: "Mr. James Ochieng", role: "Deputy Principal", image: principalImage },
-  { name: "Mrs. Sarah Mwangi", role: "Head of Lower Primary", image: principalImage },
-  { name: "Mr. David Kamau", role: "Sports Coordinator", image: principalImage },
+  { name: "Mr. James Ochieng", role: "Deputy Principal", image: deputyImage },
+  { name: "Mrs. Sarah Mwangi", role: "Head of Lower Primary", image: primaryImage },
+  { name: "Mr. David Kamau", role: "Sports Coordinator", image: sportsImage },
 ];
 
 const About = () => {
