@@ -64,9 +64,11 @@ const Contact = () => {
               <SectionHeader title="Get in Touch" centered={false} />
               <div className="space-y-4 mb-8">
                 {contactInfo.map((item, index) => (
-                  <a 
+                  <a
                     key={index}
                     href={item.href}
+                    target={item.href?.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="flex items-center gap-4 p-4 bg-muted rounded-xl hover:bg-primary/5 transition-colors"
                   >
                     <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shrink-0">
