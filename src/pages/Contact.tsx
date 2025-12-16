@@ -69,6 +69,12 @@ const Contact = () => {
                     href={item.href}
                     target={item.href?.startsWith('http') ? '_blank' : undefined}
                     rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    onClick={(e) => {
+                      if (item.href?.startsWith('mailto:')) {
+                        e.preventDefault();
+                        window.location.href = item.href;
+                      }
+                    }}
                     className="flex items-center gap-4 p-4 bg-muted rounded-xl hover:bg-primary/5 transition-colors"
                   >
                     <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shrink-0">
