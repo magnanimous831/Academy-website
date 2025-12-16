@@ -9,9 +9,9 @@ import { toast } from "sonner";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 
 const contactInfo = [
-  { icon: Phone, label: "Phone", value: "+254 700 123 456", href: "tel:+254700123456" },
+  { icon: Phone, label: "Phone", value: "+254 710 713 725", href: "tel:+254710713725" },
   { icon: Mail, label: "Email", value: "info@achieversacademy.edu", href: "mailto:info@achieversacademy.edu" },
-  { icon: MessageCircle, label: "WhatsApp", value: "+254 700 123 456", href: "https://wa.me/254700123456" },
+  { icon: MessageCircle, label: "WhatsApp", value: "+254 710 713 725", href: "https://wa.me/254710713725" },
   { icon: MapPin, label: "Address", value: "123 Education Lane, Pipeline, Nairobi", href: "#map" },
 ];
 
