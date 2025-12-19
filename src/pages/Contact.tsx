@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,10 +7,11 @@ import { SectionHeader } from "@/components/shared/SectionHeader";
 import { WaveDivider } from "@/components/shared/WaveDivider";
 import { toast } from "sonner";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import emailjs from "emailjs-com"
 
 const contactInfo = [
   { icon: Phone, label: "Phone", value: "+254 710 713 725", href: "tel:+254710713725" },
-  { icon: Mail, label: "Email", value: "info@achieversacademy.edu", href: "mailto:info@achieversacademy.edu" },
+  { icon: Mail, label: "Email", value: "tanuikipkirui765@gmail.com", href: "mailto:tanuikipkirui765@gmail.com" },
   { icon: MessageCircle, label: "WhatsApp", value: "+254 710 713 725", href: "https://wa.me/254710713725" },
   { icon: MapPin, label: "Address", value: "123 Education Lane, Pipeline, Nairobi", href: "#map" },
 ];
@@ -22,25 +23,41 @@ const hours = [
 ];
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const form = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  try {
+    // ⭐ IMPORTANT: Replace these with your actual EmailJS credentials ⭐
+    const serviceID = "service_own7q3b";  
+    const templateID = "template_5xdxgmf";  
+    const userID = "KSw0_wWuhOGEhMsif";  
+
+    if (!form.current) {
+      throw new Error("Form not found");
+    }
+
+    // ✅ UPDATED: emailjs-com uses different parameter order
+    await emailjs.sendForm(serviceID, templateID, form.current, userID);
+
+    // Success toast
     toast.success("Message sent successfully! We will respond within 24 hours.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
-  };
+
+    // Reset form
+    if (form.current) {
+      form.current.reset();
+    }
+    
+  } catch (error) {
+    console.error("EmailJS Error:", error);
+    toast.error("Failed to send message. Please try again or contact us directly.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+   
 
   return (
     <div>
@@ -108,15 +125,14 @@ const Contact = () => {
             {/* Contact Form */}
             <div>
               <SectionHeader title="Send Us a Message" centered={false} />
-              <form onSubmit={handleSubmit} className="bg-muted rounded-2xl p-6">
+              <form ref={form} onSubmit={handleSubmit} className="bg-muted rounded-2xl p-6">
                 <div className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
                         id="name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        name="user_name" // ⭐ MUST match {{user_name}} in EmailJS template
                         required
                         className="bg-card"
                       />
@@ -125,9 +141,8 @@ const Contact = () => {
                       <Label htmlFor="email">Email Address *</Label>
                       <Input
                         id="email"
+                        name="user_email" // ⭐ MUST match {{user_email}} in EmailJS template
                         type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         required
                         className="bg-card"
                       />
@@ -138,9 +153,8 @@ const Contact = () => {
                       <Label htmlFor="phone">Phone Number</Label>
                       <Input
                         id="phone"
+                        name="user_phone" // ⭐ MUST match {{user_phone}} in EmailJS template
                         type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="bg-card"
                       />
                     </div>
@@ -148,8 +162,7 @@ const Contact = () => {
                       <Label htmlFor="subject">Subject *</Label>
                       <Input
                         id="subject"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        name="subject" // ⭐ MUST match {{subject}} in EmailJS template
                         required
                         className="bg-card"
                       />
@@ -159,15 +172,26 @@ const Contact = () => {
                     <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      name="message" // ⭐ MUST match {{message}} in EmailJS template
                       required
                       className="bg-card min-h-[150px]"
                       placeholder="How can we help you?"
                     />
                   </div>
-                  <Button type="submit" size="lg" className="w-full">
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        Sending...
+                      </span>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </div>
               </form>
