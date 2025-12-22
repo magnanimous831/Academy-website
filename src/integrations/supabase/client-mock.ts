@@ -1,7 +1,7 @@
-// client-mock.ts - Mock Supabase client for testing
+
 import { Database } from './types';
 
-// Mock data for testing
+ 
 const mockBuses = [
   {
     id: 'bus-1',
@@ -123,8 +123,7 @@ const mockStops = [
     created_at: new Date().toISOString()
   }
 ];
-
-// Mock Supabase client
+ 
 export const supabase = {
   from: (table: string) => ({
     select: (columns: string = '*') => ({
@@ -193,7 +192,5 @@ export const supabase = {
     console.log('📡 Mock channel removed');
   },
   rpc: (fn: string, params: any) => Promise.resolve({ data: null, error: null })
-};
-
-// For useBusTracking hook compatibility
+}; 
 export const createClient = () => supabase;

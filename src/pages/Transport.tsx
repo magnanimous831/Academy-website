@@ -10,6 +10,7 @@ import { LiveBusTracker } from "@/components/transport/LiveBusTracker";
 import { NotificationSubscription } from "@/components/transport/NotificationSubscription";
 import { TestBusUpdater } from "@/components/transport/TestBusUpdater";
 import schoolBusHero from "@/assets/school-bus-hero.png";
+import emailjs from "emailjs-com";
 
 export default function Transport() {
   const { toast } = useToast();
@@ -82,21 +83,42 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.parentName || !formData.childName || !formData.phone || !formData.pickupAddress) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive"
-      });
-      return;
-    }
+     const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (
+    !formData.parentName ||
+    !formData.childName ||
+    !formData.phone ||
+    !formData.pickupAddress
+  ) {
+    toast({
+      title: "Missing Information",
+      description: "Please fill in all required fields.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  try {
+    await emailjs.send(
+      "service_2ba7wt9",
+      "template_0suaybn",
+      {
+        parent_name: formData.parentName,
+        child_name: formData.childName,
+        phone: formData.phone,
+        email: formData.email,
+        pickup_address: formData.pickupAddress,
+        preferred_time: formData.preferredTime,
+        notes: formData.additionalNotes,
+      },
+      "K1GxM9hnZv6lbLM-F"
+    );
 
     toast({
-      title: "Transport Request Submitted! 🚌",
-      description: "We'll contact you within 24-48 hours to confirm your child's bus route.",
+      title: "Request Sent Successfully",
+      description: "Transport request has been emailed to the school.",
     });
 
     setFormData({
@@ -107,9 +129,18 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
       email: "",
       pickupAddress: "",
       preferredTime: "",
-      additionalNotes: ""
+      additionalNotes: "",
     });
-  };
+
+  } catch (error) {
+    toast({
+      title: "Email Failed",
+      description: "Unable to send request. Please try again.",
+      variant: "destructive",
+    });
+  }
+};
+
 
   return (
     <div
@@ -351,8 +382,7 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
                     <Wrench className="w-7 h-7 text-primary-foreground" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground">Testing Dashboard</h3>
-                    <p className="text-muted-foreground">Admin tools for system testing</p>
+                    <h3 className="text-2xl font-bold text-foreground">Testing Dashboard</h3> 
                   </div>
                 </div>
                 <TestBusUpdater />
@@ -670,7 +700,7 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
                         type="tel"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="+254 (555) 000-0000"
                         required
                         className="bg-background"
                       />
@@ -736,14 +766,20 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
                     </div>
                   </div>
                   
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full mt-8 bg-gradient-to-r from-school-blue to-school-purple hover:opacity-90"
-                  >
-                    <Bus className="w-5 h-5 mr-2" />
-                    Submit Transport Request
-                  </Button>
+                                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full mt-8
+                            bg-gradient-to-r from-school-yellow to-school-orange
+                            text-school-blue font-bold
+                            hover:from-school-orange hover:to-school-yellow
+                            shadow-lg hover:shadow-xl transition-all"
+                >
+                  <Bus className="w-5 h-5 mr-2 text-school-blue" />
+                  Submit Transport Request
+                </Button>
+
+
                 </form>
               </div>
             </div>
@@ -771,7 +807,7 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">Call Transport Office</h4>
-                    <p className="opacity-90">+1 (555) 123-4567</p>
+                    <p className="opacity-90">+254 (700) 123-4567</p>
                   </div>
                 </div>
                 
@@ -815,32 +851,31 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
       </section>
       {/* SAFETY VIDEO MODAL */}
       {showSafetyVideo && (
-        <div className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center p-4">
-          <div className="relative bg-black rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl">
+  <div className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center p-4">
+    <div className="relative bg-black rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl">
 
-            {/* Close Button */}
-            <button
-              onClick={() => setShowSafetyVideo(false)}
-              className="absolute top-3 right-3 z-10 bg-black/70 text-white px-3 py-1 rounded-lg hover:bg-black"
-            >
-              ✕
-            </button>
+      <button
+        onClick={() => setShowSafetyVideo(false)}
+        className="absolute top-3 right-3 z-10 bg-black/70 text-white px-3 py-1 rounded-lg hover:bg-black"
+      >
+        ✕
+      </button>
 
-            {/* Auto-play Video */}
-            <div className="aspect-video">
-             <iframe
-                src="http://www.youtube.com/embed/tZfCC2SPh2E?controls=1&rel=0"
-                title="School Transport Safety Video"
-                className="w-full h-full"
-                allow="accelerometer; encrypted-media; picture-in-picture"
-                allowFullScreen
-              />
+      <div className="aspect-video">
+        <iframe
+          key="safety-video"
+          src="https://www.youtube.com/embed/tZfCC2SPh2E?autoplay=1&controls=1&rel=0"
+          title="School Transport Safety Video"
+          className="w-full h-full"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
 
-            </div>
+    </div>
+  </div>
+)}
 
-          </div>
-        </div>
-      )}
 
 
     </div>

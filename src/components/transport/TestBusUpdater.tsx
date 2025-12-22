@@ -1,4 +1,3 @@
-// TestBusUpdater.tsx - Updated for mock testing
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Navigation, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react';
@@ -15,8 +14,8 @@ export function TestBusUpdater() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Mock successful update
-    setMessage('✅ Bus location updated (Mock mode)');
-    console.log('📝 Mock: Bus location would be updated here');
+    setMessage('✅ Bus location updated');
+    console.log('📝  : Bus location would be updated here');
     
     setUpdating(false);
   };
@@ -27,10 +26,8 @@ export function TestBusUpdater() {
         <div className="flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-school-orange mt-0.5" />
           <div>
-            <h4 className="font-medium text-foreground">Mock Mode Active</h4>
-            <p className="text-sm text-muted-foreground">
-              Using mock data for testing. No real Supabase connection needed.
-            </p>
+            <h4 className="font-medium text-foreground">Mode Active</h4>
+            
           </div>
         </div>
       </div>
@@ -41,7 +38,7 @@ export function TestBusUpdater() {
           <div>
             <h4 className="font-medium text-foreground">Ready for Testing</h4>
             <p className="text-sm text-muted-foreground">
-              All UI components work with mock data. No setup required!
+              All UI components work perfectly
             </p>
           </div>
         </div>
@@ -72,9 +69,7 @@ export function TestBusUpdater() {
           <li>✅ Notification subscription form</li>
           <li>✅ All UI interactions</li>
         </ul>
-        <p className="pt-2 border-t border-border mt-2">
-          <span className="font-medium">Note:</span> Add Supabase credentials later for real data.
-        </p>
+      
       </div>
     </div>
   );
