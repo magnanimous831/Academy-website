@@ -105,13 +105,14 @@ const [showSafetyVideo, setShowSafetyVideo] = useState(false);
       "service_2ba7wt9",
       "template_0suaybn",
       {
-        parent_name: formData.parentName,
-        child_name: formData.childName,
-        phone: formData.phone,
-        email: formData.email,
-        pickup_address: formData.pickupAddress,
-        preferred_time: formData.preferredTime,
-        notes: formData.additionalNotes,
+          parentName: formData.parentName,
+          childName: formData.childName,
+          grade: formData.grade,
+          phone: formData.phone,
+          email: formData.email,
+          pickupAddress: formData.pickupAddress,
+          preferredTime: formData.preferredTime,
+          additionalNotes: formData.additionalNotes,
       },
       "K1GxM9hnZv6lbLM-F"
     );
