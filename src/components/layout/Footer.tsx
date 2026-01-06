@@ -131,7 +131,7 @@ export function Footer() {
                 <span className="mx-2">|</span>
                 Designed by{" "}
                 <a
-                  href="#"
+                  href="https://shadrakportfolio.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium hover:text-primary transition-colors"
